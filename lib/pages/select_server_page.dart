@@ -1,0 +1,254 @@
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
+import 'package:flutter/material.dart';
+import 'package:hwinfo_remote_display/common.dart';
+import 'package:hwinfo_remote_display/generated/sensorcomms.pb.dart';
+import 'package:hwinfo_remote_display/services/server_scanner_service.dart';
+import 'package:hwinfo_remote_display/models/server_info.dart';
+import 'package:hwinfo_remote_display/pages/data_visualizer_page.dart';
+import 'package:hwinfo_remote_display/widgets_lib.dart';
+import 'package:wakelock/wakelock.dart';
+
+class SelectServerPage extends StatefulWidget {
+  const SelectServerPage({Key? key}) : super(key: key);
+
+  @override
+  State<SelectServerPage> createState() => _SelectServerPageState();
+}
+
+class _SelectServerPageState extends State<SelectServerPage> {
+  late ScrollController _serverScrollController;
+  final ServerScannerService _service = ServerScannerService();
+  bool _isServerLoading = false;
+
+  @override
+  void initState() {
+    _serverScrollController = ScrollController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+                flex: 4,
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Image(
+                        image: AssetImage('assets/icon/icon.png'),
+                        height: 64,
+                        width: 64,
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      ThemeSwitcher(
+                        clipper: const ThemeSwitcherBoxClipper(),
+                        builder: (context) {
+                          return GestureDetector(
+                            onTap: () {
+                              ThemeSwitcher.of(context).changeTheme(
+                                theme: ThemeModelInheritedNotifier.of(context)
+                                            .theme
+                                            .brightness ==
+                                        Brightness.light
+                                    ? darkTheme
+                                    : lightTheme,
+                              );
+                            },
+                            child: _isServerLoading
+                                ? CircularProgressIndicator(
+                                    color: Theme.of(context).highlightColor,
+                                  )
+                                : Text(
+                                    'Select a Server',
+                                    style:
+                                        Theme.of(context).textTheme.headline4,
+                                  ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                )),
+            Expanded(
+              flex: 6,
+              child: StreamBuilder(
+                stream: _service.stream,
+                initialData: List<ServerInfo>.empty(),
+                builder: (context, snapshot) {
+                  var servers = snapshot.data as List<ServerInfo>;
+
+                  if (servers.isEmpty) {
+                    return Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          CircularProgressIndicator(
+                            color: Theme.of(context).highlightColor,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Text('Looking for servers...',
+                                style: Theme.of(context).textTheme.subtitle1),
+                          )
+                        ],
+                      ),
+                    );
+                  }
+
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 32.0),
+                        child: Text(
+                            servers.length > 1
+                                ? '${servers.length} Servers Found'
+                                : '1 Server Found',
+                            style: Theme.of(context).textTheme.headline5),
+                      ),
+                      Expanded(
+                          child: FloatCard(
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 16,
+                        ),
+                        child: OrientationBuilder(
+                          builder: (context, orientation) {
+                            return FadingEdgeScrollView.fromScrollView(
+                              child: GridView.builder(
+                                controller: _serverScrollController,
+                                itemCount: servers.length,
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount:
+                                            orientation == Orientation.portrait
+                                                ? 1
+                                                : 2,
+                                        childAspectRatio: 3.8),
+                                itemBuilder: (context, index) {
+                                  final serverInfo = servers[index];
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16.0),
+                                    child:
+                                        _buildServerCard(context, serverInfo),
+                                  );
+                                },
+                              ),
+                            );
+                          },
+                        ),
+                      )),
+                    ],
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildServerCard(BuildContext context, ServerInfo serverInfo) {
+    return Material(
+      borderRadius: BorderRadius.circular(10),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(10),
+        splashColor: Theme.of(context).splashColor,
+        onTap: () {
+          _service.pause('navigating to Visualizer');
+          Wakelock.enable();
+
+          setState(() {
+            _isServerLoading = true;
+          });
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) {
+              return DataVisualizerPage(serverInfo: serverInfo);
+            }),
+          );
+
+          setState(() {
+            _isServerLoading = false;
+          });
+
+          Wakelock.disable();
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: SizedBox(
+            height: 96,
+            child: Ink(
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Column(
+                    children: [
+                      BlendedAssetImage(
+                          assetImageName: serverInfo.info.systemType ==
+                                  ComputerInfo_SystemType.DESKTOP
+                              ? 'assets/hw/desktop.png'
+                              : 'assets/hw/laptop.png'),
+                      Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(serverInfo.ip,
+                              style: Theme.of(context).textTheme.headline6),
+                          Text(serverInfo.info.computerName,
+                              style: Theme.of(context).textTheme.caption)
+                        ],
+                      ),
+                    ],
+                  ),
+                  Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(serverInfo.info.systemMake,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText1!
+                              .copyWith(fontStyle: FontStyle.italic)),
+                      Text(serverInfo.info.cpuName,
+                          style: Theme.of(context).textTheme.bodyText2),
+                      if (serverInfo.info.gpuName.isNotEmpty)
+                        Text(serverInfo.info.gpuName,
+                            style: Theme.of(context).textTheme.bodyText2),
+                      Text(serverInfo.info.memory,
+                          style: Theme.of(context).textTheme.bodyText2),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
