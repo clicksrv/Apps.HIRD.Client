@@ -3,6 +3,10 @@ HIRD (a.k.a. HWiNFO Remote Display) Client is an application that allows an andr
 
 ## Release Notes
 
+### v0.1.0+2
+- Added iOS CI/CD to test file creation.
+
+### v0.1.0+1
 - Initial GitHub Release.
 - Implemented GitHub Flutter CI/CD to release APKs.
 - Package is unsigned. You will get a warning when installing this APK.
