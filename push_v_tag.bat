@@ -8,6 +8,7 @@ echo [ Releasing v%v% ]
 
 set commit_msg=Pushing Release v%v%
 
+git pull
 git add .
 git commit -m "%commit_msg%"
 git tag v%v%
