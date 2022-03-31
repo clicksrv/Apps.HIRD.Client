@@ -1,10 +1,21 @@
-# HIRD Windows Server
-HIRD (a.k.a. HWiNFO Remote Display) Server is an application that allows a system with HWiNFO to act as a server for remote devices to connect and showcase the vitals of it.
+# HIRD Android Client
+HIRD (a.k.a. HWiNFO Remote Display) Client is an application that allows an android device to display server info from [HIRD Server](https://github.com/clicksrv/Apps.HIRD.Server/releases/) on a local network.
 
 ## Release Notes
 
-- Setup is now named as HIRD_Setup.exe
-- CI Improvements
+- Initial GitHub Release.
+- Implemented GitHub Flutter CI/CD to release APKs.
+- Package is unsigned. You will get a warning when installing this APK.
+- UI is a prototype design, and does not reflect the final intended design.
+
+## Known Issues
+- Top bar and bottom bar implementation for having it hidden do not work properly.
+- Connection expiry with the server is not proper and may cause issues.
+- Wakelock does not work as expected (Regression).
+- No Flutter Tests defined.
+- UI Scaling issues.
+- Theme switching does not work.
+- More pages are to be developed and are in progress.
 
 ## Note from the developer
 
