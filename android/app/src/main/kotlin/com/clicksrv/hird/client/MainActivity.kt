@@ -1,4 +1,4 @@
-package com.devsrv.hwinfophonedisplay.hwinfo_phone_display
+package com.clicksrv.hird.client
 
 import io.flutter.embedding.android.FlutterActivity
 
