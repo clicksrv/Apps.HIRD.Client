@@ -10,9 +10,6 @@ on:
     tags:
       - "v*.*.*"
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -34,7 +31,7 @@ jobs:
       - run: flutter build apk
       #- run: flutter build appbundle
 
-      - name: GH Release
+      - name: Create release with APK
         uses: softprops/action-gh-release@v0.1.14
         with:
           body_path: CHANGELOG.md

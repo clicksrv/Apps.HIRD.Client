@@ -10,9 +10,6 @@ on:
     tags:
       - "v*.*.*"
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
 jobs:
   build:
     runs-on: macos-latest
@@ -27,9 +24,11 @@ jobs:
       - run: flutter pub get
       - run: flutter build ios --release --no-codesign
 
-      - name: GH Release
-        uses: softprops/action-gh-release@v0.1.14
+      - name: Upload iOS APP to Release
+        uses: svenstaro/upload-release-action@v2
         with:
-          body_path: CHANGELOG.md
-          files: |
-            /Users/runner/work/Apps.HIRD.Client/Apps.HIRD.Client/build/ios/iphoneos/Runner.app
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: Users/runner/work/Apps.HIRD.Client/Apps.HIRD.Client/build/ios/iphoneos/Runner.app
+          asset_name: Runner.app
+          tag: ${{ github.ref }}
+          overwrite: true
