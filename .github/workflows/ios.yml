@@ -27,9 +27,9 @@ jobs:
       - run: flutter pub get
       - run: flutter build ios --release --no-codesign
 
-      #- name: GH Release
-      #  uses: softprops/action-gh-release@v0.1.14
-      #  with:
-      #    body_path: CHANGELOG.md
-      #    files: |
-      #      build/app/outputs/flutter-apk/app-release.apk
+      - name: GH Release
+        uses: softprops/action-gh-release@v0.1.14
+        with:
+          body_path: CHANGELOG.md
+          files: |
+            /Users/runner/work/Apps.HIRD.Client/Apps.HIRD.Client/build/ios/iphoneos/Runner.app
