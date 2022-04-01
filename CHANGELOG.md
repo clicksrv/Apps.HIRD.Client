@@ -3,6 +3,9 @@ HIRD (a.k.a. HWiNFO Remote Display) Client is an application that allows an andr
 
 ## Release Notes
 
+### v0.1.0+3
+- Added iOS .App release file.
+
 ### v0.1.0+2
 - Added iOS CI/CD to test file creation.
 
