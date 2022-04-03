@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.clicksrv.hird.client">
-   <application
-        android:label="HWiNFO Remote Display"
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <application
+        android:label="HIRD"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
@@ -31,5 +32,4 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
-    <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>

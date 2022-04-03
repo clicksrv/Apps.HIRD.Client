@@ -98,20 +98,12 @@ class _DataVisualizerPageState extends State<DataVisualizerPage> {
                   ThemeSwitcher(
                     clipper: const ThemeSwitcherCircleClipper(),
                     builder: (context) {
-                      var isBright = ThemeModelInheritedNotifier.of(context)
-                              .theme
-                              .brightness ==
-                          Brightness.light;
-
                       return GestureDetector(
                         onTap: () {
-                          ThemeSwitcher.of(context).changeTheme(
-                            theme: isBright ? darkTheme : lightTheme,
-                          );
+                          SystemChrome.setEnabledSystemUIMode(
+                              SystemUiMode.immersive);
                         },
-                        child: isBright
-                            ? const Icon(Icons.brightness_high)
-                            : const Icon(Icons.dark_mode),
+                        child: const Icon(Icons.fullscreen),
                       );
                     },
                   ),

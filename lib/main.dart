@@ -51,7 +51,7 @@ class _MyAppState extends State<MyApp> {
     } on PlatformException {
       logger('HRR not supported.');
     }
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+
     _connectivitySubscription =
         _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
   }
