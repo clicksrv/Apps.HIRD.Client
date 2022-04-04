@@ -1,7 +1,7 @@
 name: hird
 description: Mobile App for displaying data from HWiNFO using the HIRD Server.
 publish_to: 'none'
-version: 0.1.0+5
+version: 0.1.0+6
 
 environment:
   sdk: ">=2.16.2 <3.0.0"
