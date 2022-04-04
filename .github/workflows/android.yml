@@ -41,7 +41,15 @@ jobs:
           SIGNING_STORE_PASSWORD: ${{ secrets.UPLOAD_KEYSTORE_PASSPHRASE }}
       - run: flutter pub get
       - run: flutter build apk
+        env:
+          SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
+          SIGNING_KEY_PASSWORD: ${{ secrets.UPLOAD_KEYSTORE_PASSPHRASE }}
+          SIGNING_STORE_PASSWORD: ${{ secrets.UPLOAD_KEYSTORE_PASSPHRASE }}
       - run: flutter build appbundle
+        env:
+          SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
+          SIGNING_KEY_PASSWORD: ${{ secrets.UPLOAD_KEYSTORE_PASSPHRASE }}
+          SIGNING_STORE_PASSWORD: ${{ secrets.UPLOAD_KEYSTORE_PASSPHRASE }}
 ########################################
       - name: Create release with APK
         uses: softprops/action-gh-release@v0.1.14
