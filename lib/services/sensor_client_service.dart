@@ -1,6 +1,6 @@
 import 'package:grpc/grpc.dart';
-import 'package:hwinfo_remote_display/constants.dart';
-import 'package:hwinfo_remote_display/generated/sensorcomms.pbgrpc.dart';
+import 'package:hird/constants.dart';
+import 'package:hird/generated/sensorcomms.pbgrpc.dart';
 
 SensorServiceClient getClient(String ip) {
   var channel = ClientChannel(ip,

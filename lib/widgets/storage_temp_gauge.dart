@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hwinfo_remote_display/generated/sensorcomms.pb.dart';
+import 'package:hird/generated/sensorcomms.pb.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class StorageTempGauge extends StatelessWidget {

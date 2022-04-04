@@ -1,11 +1,10 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
-import 'package:hwinfo_remote_display/common.dart';
-import 'package:hwinfo_remote_display/constants.dart';
-import 'package:hwinfo_remote_display/generated/sensorcomms.pb.dart';
-import 'package:hwinfo_remote_display/models/server_info.dart';
-import 'package:hwinfo_remote_display/services/sensor_client_service.dart';
+import 'package:hird/common.dart';
+import 'package:hird/constants.dart';
+import 'package:hird/generated/sensorcomms.pb.dart';
+import 'package:hird/models/server_info.dart';
+import 'package:hird/services/sensor_client_service.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:ping_discover_network/ping_discover_network.dart';
 

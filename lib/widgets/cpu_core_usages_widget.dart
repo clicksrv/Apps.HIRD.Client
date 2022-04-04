@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hwinfo_remote_display/generated/sensorcomms.pb.dart';
-import 'package:hwinfo_remote_display/widgets_lib.dart';
+import 'package:hird/generated/sensorcomms.pb.dart';
+import 'package:hird/widgets_lib.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class CpuCoreUsagesWidget extends StatelessWidget {

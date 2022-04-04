@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:hwinfo_remote_display/main.dart';
+import 'package:hird/main.dart';
 
 final darkTheme = ThemeData(
   brightness: Brightness.dark,

@@ -1,4 +1,4 @@
-import 'package:hwinfo_remote_display/generated/sensorcomms.pbgrpc.dart';
+import 'package:hird/generated/sensorcomms.pbgrpc.dart';
 
 class ServerInfo {
   String ip;

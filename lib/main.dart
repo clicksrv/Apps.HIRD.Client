@@ -5,15 +5,14 @@ import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_displaymode/flutter_displaymode.dart';
-import 'package:hwinfo_remote_display/common.dart';
-import 'package:hwinfo_remote_display/constants.dart';
-import 'package:hwinfo_remote_display/models/server_info.dart';
-import 'package:hwinfo_remote_display/pages/data_visualizer_page.dart';
-import 'package:hwinfo_remote_display/pages/no_connectivity_page.dart';
-import 'package:hwinfo_remote_display/pages/select_server_page.dart';
-import 'package:hwinfo_remote_display/services/server_scanner_service.dart';
-import 'package:hwinfo_remote_display/settings.dart';
+import 'package:hird/common.dart';
+import 'package:hird/constants.dart';
+import 'package:hird/models/server_info.dart';
+import 'package:hird/pages/data_visualizer_page.dart';
+import 'package:hird/pages/no_connectivity_page.dart';
+import 'package:hird/pages/select_server_page.dart';
+import 'package:hird/services/server_scanner_service.dart';
+import 'package:hird/settings.dart';
 import 'package:wakelock/wakelock.dart';
 
 // MOBILE APPS
@@ -45,12 +44,6 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     initConnectivity();
-
-    try {
-      FlutterDisplayMode.setHighRefreshRate();
-    } on PlatformException {
-      logger('HRR not supported.');
-    }
 
     _connectivitySubscription =
         _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);

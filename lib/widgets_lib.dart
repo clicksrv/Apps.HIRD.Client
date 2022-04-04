@@ -1,7 +1,7 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:hwinfo_remote_display/generated/sensorcomms.pb.dart';
-import 'package:hwinfo_remote_display/settings.dart';
+import 'package:hird/generated/sensorcomms.pb.dart';
+import 'package:hird/settings.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 _cardDecoration(BuildContext context) => BoxDecoration(
